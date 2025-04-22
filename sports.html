@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SportBook - Elite Sports Events</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--primary-color: #f84464;
+--primary-hover: #e63353;
+--secondary-color: #333333;
+--light-color: #f8f9fa;
+--dark-color: #212529;
+--gray-color: #6c757d;
+--shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+--transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+--glow-color: rgba(248, 68, 100, 0.5);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body { background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364); background-size: 400% 400%; animation: gradientBG 15s ease infinite; color: white; overflow-x: hidden; }
+
+@keyframes gradientBG {
+0% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+
+.back-button {
+position: fixed; top: 20px; right: 20px; z-index: 1001; width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 1.5rem; transition: var(--transition); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.back-button:hover { background: var(--primary-color); transform: scale(1.1); box-shadow: 0 0 15px var(--glow-color); }
+
+.container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 1; }
+
+.section-title { text-align: center; margin-bottom: 60px; position: relative; }
+
+.section-title h2 { font-size: 2.5rem; color: white; display: inline-block; padding-bottom: 15px; position: relative; }
+
+.section-title h2::after {
+content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 4px; background: linear-gradient(90deg, var(--primary-color), #ff6b88); border-radius: 2px;
+}
+
+.sports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 40px; margin-bottom: 80px; }
+
+.sport-card {
+background-color: rgba(255, 255, 255, 0.1); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); position: relative; animation: fadeInUp 0.6s ease-out; animation-fill-mode: both; backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes fadeInUp {
+from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); }
+}
+
+.sport-card:nth-child(1) { animation-delay: 0.1s; }
+.sport-card:nth-child(2) { animation-delay: 0.2s; }
+.sport-card:nth-child(3) { animation-delay: 0.3s; }
+.sport-card:nth-child(4) { animation-delay: 0.4s; }
+.sport-card:nth-child(5) { animation-delay: 0.5s; }
+
+.sport-card:hover {
+transform: translateY(-10px) scale(1.02); box-shadow: 0 15px 30px rgba(248, 68, 100, 0.3); background-color: rgba(255, 255, 255, 0.15);
+}
+
+.sport-poster { height: 340px; overflow: hidden; position: relative; }
+
+.sport-poster img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+.sport-card:hover .sport-poster img { transform: scale(1.1); }
+
+.sport-badge { position: absolute; top: 15px; right: 15px; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; display: flex; align-items: center; z-index: 2; transition: var(--transition); }
+
+.sport-badge i { margin-right: 5px; color: #ffc107; }
+
+.sport-card:hover .sport-badge { background-color: var(--primary-color); transform: scale(1.1); }
+
+.sport-info { padding: 20px; position: relative; }
+
+.sport-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.3s ease; color: white; }
+
+.sport-card:hover .sport-title { color: var(--primary-color); }
+
+.sport-details { color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+.sport-meta { display: flex; justify-content: space-between; align-items: center; }
+
+.rating { display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.1); padding: 6px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; transition: var(--transition); color: white; }
+
+.rating i { color: #ffc107; margin-right: 5px; font-size: 0.9rem; }
+
+.sport-card:hover .rating { background-color: var(--primary-color); color: white; }
+
+.sport-card:hover .rating i { color: white; }
+
+.book-btn { padding: 8px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: var(--transition); }
+
+.book-btn:hover { background-color: var(--primary-hover); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(248, 68, 100, 0.4); }
+
+.sport-poster::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 50%); opacity: 0; transition: var(--transition); }
+
+.sport-card:hover .sport-poster::after { opacity: 1; }
+
+.booking-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: center; justify-content: center; animation: fadeIn 0.5s ease; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.booking-content {
+background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 15px; width: 90%; max-width: 800px; max-height: 90vh; padding: 30px; box-shadow: var(--shadow); position: relative; overflow-y: auto; animation: slideIn 0.5s ease; border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.close-btn { position: absolute; top: 15px; right: 15px; font tomorrow: 1.5rem; color: rgba(255, 255, 255, 0.7); cursor: pointer; transition: var(--transition); }
+
+.close-btn:hover { color: var(--primary-color); transform: rotate(90deg); text-shadow: 0 0 10px var(--glow-color); }
+
+.booking-step { display: none; margin-top: 40px; }
+
+.booking-step.active { display: block; }
+
+.booking-section { margin-bottom: 30px; }
+
+.booking-section h3 { font-size: 1.5rem; color: white; margin-bottom: 15px; position: relative; }
+
+.booking-section h3::after { content: ''; width: 50px; height: 3px; background: var(--primary-color); position: absolute; bottom: -5px; left: 0; }
+
+.section-type-bar { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.05); padding: 10px 20px; border-radius: 10px; margin-bottom: 30px; border: 1px solid rgba(255, 255, 255, 0.1); }
+
+.section-type-bar span { flex: 1; text-align: center; font-size: 0.9rem; font-weight: 500; color: rgba(255, 255, 255, 0.7); padding: 5px; transition: var(--transition); cursor: default; }
+
+.section-type-bar span.active { color: var(--primary-color); background: rgba(248, 68, 100, 0.2); border-radius: 5px; box-shadow: 0 0 10px var(--glow-color); }
+
+.ticket-types, .payment-methods { display: flex; flex-wrap: wrap; gap: 15px; }
+
+.ticket-type, .payment-method { padding: 15px 20px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; cursor: pointer; transition: var(--transition); color: white; position: relative; overflow: hidden; min-width: 150px; text-align: center; }
+
+.ticket-type::after, .payment-method::after {
+content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: radial-gradient(circle, var(--glow-color), transparent); opacity: 0; transition: var(--transition); transform: translate(-50%, -50%);
+}
+
+.ticket-type:hover::after, .payment-method:hover::after { width: 200%; height: 200%; opacity: 0.5; }
+
+.ticket-type:hover, .payment-method:hover { background: var(--primary-color); transform: translateY(-3px); box-shadow: 0 0 15px var(--glow-color); }
+
+.ticket-type.selected, .payment-method.selected { background: var(--primary-hover); box-shadow: 0 0 20px var(--glow-color); animation: pulseGlow 1.5s infinite; }
+
+@keyframes pulseGlow {
+0% { box-shadow: 0 0 20px var(--glow-color); }
+50% { box-shadow: 0 0 30px var(--glow-color); }
+100% { box-shadow: 0 0 20px var(--glow-color); }
+}
+
+.ticket-price { font-weight: bold; color: var(--primary-color); margin-top: 5px; }
+
+.quantity-selector { display: flex; align-items: center; gap: 10px; margin-top: 20px; }
+
+.quantity-btn { padding: 5px 10px; background: rgba(255, 255, 255, 0.1); border: none; border-radius: 5px; color: white; cursor: pointer; transition: var(--transition); }
+
+.quantity-btn:hover { background: var(--primary-color); transform: scale(1.1); }
+
+.quantity-input { width: 50px; padding: 5px; background: rgba(255, 255, 255, 0.1); border: none; border-radius: 5px; color: white; text-align: center; }
+
+.payment-method i { margin-right: 8px; }
+
+.credit-card-form { display: flex; flex-direction: column; gap: 15px; }
+
+.credit-card-form label { font-size: 0.9rem; margin-bottom: 5px; display: block; }
+
+.credit-card-form input { padding: 10px; background: rgba(255, 255, 255, 0.1); border: none; border-radius: 8px; color: white; width: 100%; transition: var(--transition); }
+
+.credit-card-form input:focus { outline: none; background: rgba(255, 255, 255, 0.2); box-shadow: 0 0 15px var(--glow-color); }
+
+.card-details { display: flex; gap: 15px; }
+
+.card-details div { flex: 1; }
+
+.payment-details { background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; margin-top: 15px; color: white; }
+
+.payment-details p { font-size: 0.95rem; margin: 8px 0; display: flex; justify-content: space-between; }
+
+.payment-details p span:last-child { font-weight: 500; }
+
+.total-price { font-size: 1.1rem; font-weight: bold; margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(255, 255, 255, 0.3); }
+
+.nav-btn { padding: 10px 20px; background: var(--primary-color); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition); margin: 10px 5px 0 0; }
+
+.nav-btn:hover { background: var(--primary-hover); transform: scale(1.05); box-shadow: 0 8px 20px rgba(248, 68, 100, 0.4); }
+
+.nav-btn.secondary { background: rgba(255, 255, 255, 0.1); }
+
+.nav-btn.secondary:hover { background: rgba(255, 255, 255, 0.2); }
+
+.success-message { text-align: center; padding: 20px; background: rgba(40, 167, 69, 0.2); color: #d4edda; border-radius: 10px; margin-top: 15px; animation: fadeIn 0.5s ease; border: 1px solid rgba(40, 167, 69, 0.3); }
+
+.ticket {
+background: linear-gradient(135deg, #fff, #f9f9f9); width: 350px; padding: 25px; border-radius: 15px; box-shadow: var(--shadow); margin: 20px auto; position: relative; display: none; border: 2px dashed #ccc; color: #333;
+}
+
+.ticket::before, .ticket::after { content: ''; position: absolute; width: 20px; height: 20px; background: #f5f5f5; border-radius: 50%; border: 2px dashed #ccc; }
+
+.ticket::before { top: -12px; left: 50%; transform: translateX(-50%); }
+.ticket::after { bottom: -12px; left: 50%; transform: translateX(-50%); }
+
+.ticket h3 {
+color: var(--primary-color); margin-bottom: 15px; text-align: center; font-size: 1.5rem; border-bottom: 2px dashed #ccc; padding-bottom: 10px;
+}
+
+.ticket p { font-size: 0.9rem; margin: 8px 0; color: var(--secondary-color); display: flex; justify-content: space-between; }
+
+.ticket .barcode { width: 100%; height: 50px; background: repeating-linear-gradient(90deg, #333 0, #333 2px, transparent 2px, transparent 4px); margin-top: 20px; border-radius: 5px; }
+
+.ticket-logo {
+text-align: center; margin-bottom: 15px; font-size: 1.8rem; font-weight: bold; color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+.booking-content { width: 95%; padding: 20px; }
+.ticket-types, .payment-methods { justify-content: center; }
+.card-details { flex-direction: column; }
+.ticket { width: 280px; }
+.back-button { width: 40px; height: 40px; font-size: 1.2rem; }
+.section-type-bar { flex-direction: column; gap: 10px; }
+}
+
+@media (max-width: 480px) {
+.sports-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.ticket-type, .payment-method { min-width: 120px; }
+}
+</style>
+</head>
+<body>
+<a href="javascript:history.back()" class="back-button">
+<i class="fas fa-arrow-left"></i>
+</a>
+
+<div class="container">
+<div class="section-title">
+<h2>Elite Sports Events</h2>
+</div>
+<div class="sports-grid">
+<div class="sport-card">
+<div class="sport-poster">
+<img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e" alt="Champions League">
+<span class="sport-badge"><i class="fas fa-star"></i> 9.5</span>
+</div>
+<div class="sport-info">
+<h3 class="sport-title">Champions League Final</h3>
+<p class="sport-details">June 10, 2025 | London</p>
+<div class="sport-meta">
+<div class="rating"><i class="fas fa-star"></i><span>9.5/10</span></div>
+<button class="book-btn" data-event="Champions League Final">Book Now</button>
+</div>
+</div>
+</div>
+<div class="sport-card">
+<div class="sport-poster">
+<img src="Nba7.png" alt="NBA Finals">
+<span class="sport-badge"><i class="fas fa-star"></i> 9.2</span>
+</div>
+<div class="sport-info">
+<h3 class="sport-title">NBA Finals Game 7</h3>
+<p class="sport-details">June 15, 2025 | New York</p>
+<div class="sport-meta">
+<div class="rating"><i class="fas fa-star"></i><span>9.2/10</span></div>
+<button class="book-btn" data-event="NBA Finals Game 7">Book Now</button>
+</div>
+</div>
+</div>
+<div class="sport-card">
+<div class="sport-poster">
+<img src="https://images.unsplash.com/photo-1509023464722-18d996393ca8" alt="Wimbledon">
+<span class="sport-badge"><i class="fas fa-star"></i> 8.9</span>
+</div>
+<div class="sport-info">
+<h3 class="sport-title">Wimbledon Men's Final</h3>
+<p class="sport-details">July 14, 2025 | London</p>
+<div class="sport-meta">
+<div class="rating"><i class="fas fa-star"></i><span>8.9/10</span></div>
+<button class="book-btn" data-event="Wimbledon Men's Final">Book Now</button>
+</div>
+</div>
+</div>
+<div class="sport-card">
+<div class="sport-poster">
+<img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12" alt="Super Bowl">
+<span class="sport-badge"><i class="fas fa-star"></i> 9.8</span>
+</div>
+<div class="sport-info">
+<h3 class="sport-title">Super Bowl LIX</h3>
+<p class="sport-details">Feb 9, 2025 | New Orleans</p>
+<div class="sport-meta">
+<div class="rating"><i class="fas fa-star"></i><span>9.8/10</span></div>
+<button class="book-btn" data-event="Super Bowl LIX">Book Now</button>
+</div>
+</div>
+</div>
+<div class="sport-card">
+<div class="sport-poster">
+<img src="f1.png" alt="F1 Monaco">
+<span class="sport-badge"><i class="fas fa-star"></i> 9.0</span>
+</div>
+<div class="sport-info">
+<h3 class="sport-title">F1 Monaco Grand Prix</h3>
+<p class="sport-details">May 25, 2025 | Monaco</p>
+<div class="sport-meta">
+<div class="rating"><i class="fas fa-star"></i><span>9.0/10</span></div>
+<button class="book-btn" data-event="F1 Monaco Grand Prix">Book Now</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="booking-modal" id="bookingModal">
+<div class="booking-content">
+<i class="fas fa-times close-btn" onclick="closeModal()"></i>
+<div class="booking-section">
+<h3 id="bookingEventTitle">Book Tickets</h3>
+</div>
+<div class="section-type-bar">
+<span id="step1-bar">Ticket Type & Qty</span>
+<span id="step2-bar">Payment Method</span>
+<span id="step3-bar">Card Details</span>
+<span id="step4-bar">Payment</span>
+</div>
+<div class="booking-step active" id="step1">
+<div class="booking-section">
+<h3>Select Ticket Type</h3>
+<div class="ticket-types" id="ticketTypes"></div>
+</div>
+<div class="booking-section">
+<h3>Quantity</h3>
+<div class="quantity-selector">
+<button class="quantity-btn" id="decreaseQty">-</button>
+<input type="number" class="quantity-input" id="ticketQty" value="1" min="1" max="10">
+<button class="quantity-btn" id="increaseQty">+</button>
+</div>
+</div>
+<button class="nav-btn" onclick="nextStep(1)">Next</button>
+</div>
+<div class="booking-step" id="step2">
+<div class="booking-section">
+<h3>Select Payment Method</h3>
+<div class="payment-methods">
+<div class="payment-method" data-method="credit"><i class="fas fa-credit-card"></i><span>Credit Card</span></div>
+<div class="payment-method" data-method="debit"><i class="fas fa-credit-card"></i><span>Debit Card</span></div>
+<div class="payment-method" data-method="paypal"><i class="fab fa-paypal"></i><span>PayPal</span></div>
+<div class="payment-method" data-method="upi"><i class="fas fa-mobile-alt"></i><span>UPI</span></div>
+</div>
+</div>
+<button class="nav-btn" onclick="nextStep(2)">Next</button>
+<button class="nav-btn secondary" onclick="prevStep(2)">Previous</button>
+</div>
+<div class="booking-step" id="step3">
+<div class="booking-section">
+<h3>Enter Card Details</h3>
+<form class="credit-card-form" id="cardForm">
+<label for="cardholderName">Cardholder Name <span style="color: #ff4444;">*</span></label>
+<input type="text" id="cardholderName" placeholder="John Doe" required>
+<label for="cardNumber">Card Number <span style="color: #ff4444;">*</span></label>
+<input type="text" id="cardNumber" placeholder="1234567890123456" required>
+<div class="card-details">
+<div>
+<label for="expiryDate">Expiration Date <span style="color: #ff4444;">*</span></label>
+<input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" pattern="(0[1-9]|1[0-2])/[0-9]{2}" required>
+</div>
+<div>
+<label for="cvv">CVV <span style="color: #ff4444;">*</span></label>
+<input type="text" id="cvv" placeholder="123" maxlength="3" pattern="[0-9]{3}" required>
+</div>
+</div>
+</form>
+</div>
+<button class="nav-btn" onclick="nextStep(3)">Next</button>
+<button class="nav-btn secondary" onclick="prevStep(3)">Previous</button>
+</div>
+<div class="booking-step" id="step4">
+<div class="booking-section payment-details" id="paymentDetails">
+<h3>Payment Details</h3>
+<p><span>Event:</span> <span id="payEvent"></span></p>
+<p><span>Ticket Type:</span> <span id="payTicketType"></span></p>
+<p><span>Quantity:</span> <span id="payQuantity"></span></p>
+<p><span>Price per Ticket:</span> $<span id="ticketPrice">0</span></p>
+<p class="total-price"><span>Total:</span> $<span id="totalPrice">0</span></p>
+</div>
+<button class="nav-btn" id="proceedBtn">Proceed to Pay</button>
+<button class="nav-btn secondary" onclick="prevStep(4)">Previous</button>
+<div class="success-message" id="successMessage" style="display: none;">
+<h3>Tickets Booked Successfully!</h3>
+<p>Your Transaction ID: <span id="transactionId"></span></p>
+<p>Your Reference Code: <span id="referenceCode"></span></p>
+</div>
+<div class="ticket" id="ticketPrint" style="display: none;">
+<div class="ticket-logo">SportBook</div>
+<h3>Event Ticket</h3>
+<p><span>Event:</span> <span id="ticketEvent"></span></p>
+<p><span>Ticket Type:</span> <span id="ticketType"></span></p>
+<p><span>Quantity:</span> <span id="ticketQuantity"></span></p>
+<p><span>Total Paid:</span> $<span id="ticketTotal"></span></p>
+<p><span>Transaction ID:</span> <span id="ticketTransaction"></span></p>
+<p><span>Reference Code:</span> <span id="ticketReferenceCode"></span></p>
+<div class="barcode"></div>
+</div>
+<button class="nav-btn" id="printBtn" style="display: none;">Print Ticket</button>
+</div>
+</div>
+</div>
+<script>
+let selectedEvent = '';
+let selectedTicketType = '';
+let selectedQuantity = 1;
+let selectedPaymentMethod = '';
+let currentStep = 1;
+const eventTicketTypes = {
+"Champions League Final": [
+{ type: "VIP", price: 150 },
+{ type: "Standard", price: 80 },
+{ type: "Economy", price: 50 }
+],
+"NBA Finals Game 7": [
+{ type: "VIP", price: 200 },
+{ type: "Standard", price: 100 },
+{ type: "Economy", price: 60 }
+],
+"Wimbledon Men's Final": [
+{ type: "VIP", price: 180 },
+{ type: "Standard", price: 90 },
+{ type: "Economy", price: 55 }
+],
+"Super Bowl LIX": [
+{ type: "VIP", price: 250 },
+{ type: "Standard", price: 120 },
+{ type: "Economy", price: 70 }
+],
+"F1 Monaco Grand Prix": [
+{ type: "VIP", price: 300 },
+{ type: "Standard", price: 150 },
+{ type: "Economy", price: 80 }
+]
+};
+
+const bookingModal = document.getElementById('bookingModal');
+const bookingEventTitle = document.getElementById('bookingEventTitle');
+const sectionBarItems = document.querySelectorAll('.section-type-bar span');
+
+document.querySelectorAll('.book-btn').forEach(btn => {
+btn.addEventListener('click', () => {
+selectedEvent = btn.dataset.event;
+bookingEventTitle.textContent = `Book Tickets - ${selectedEvent}`;
+bookingModal.style.display = 'flex';
+currentStep = 1;
+showStep(currentStep);
+generateTicketTypes();
+updatePaymentDetails();
+updateSectionBar();
+});
+});
+
+function closeModal() {
+bookingModal.style.display = 'none';
+resetSelections();
+}
+
+function resetSelections() {
+selectedTicketType = '';
+selectedQuantity = 1;
+selectedPaymentMethod = '';
+currentStep = 1;
+document.querySelectorAll('.selected').forEach(item => item.classList.remove('selected'));
+document.getElementById('successMessage').style.display = 'none';
+document.getElementById('ticketPrint').style.display = 'none';
+document.getElementById('printBtn').style.display = 'none';
+document.getElementById('ticketQty').value = 1;
+document.getElementById('cardholderName').value = '';
+document.getElementById('cardNumber').value = '';
+document.getElementById('expiryDate').value = '';
+document.getElementById('cvv').value = '';
+showStep(currentStep);
+updatePaymentDetails();
+updateSectionBar();
+}
+
+function showStep(step) {
+document.querySelectorAll('.booking-step').forEach(s => s.classList.remove('active'));
+document.getElementById(`step${step}`).classList.add('active');
+document.querySelector('.booking-content').scrollTop = 0;
+updateSectionBar();
+}
+
+function nextStep(current) {
+if (current === 1 && !selectedTicketType) {
+alert('Please select a ticket type.');
+return;
+}
+if (current === 2 && !selectedPaymentMethod) {
+alert('Please select a payment method.');
+return;
+}
+if (current === 3 && selectedPaymentMethod !== 'upi') {
+const form = document.getElementById('cardForm');
+const cardholderName = document.getElementById('cardholderName').value;
+const expiryDate = document.getElementById('expiryDate').value;
+const cvv = document.getElementById('cvv').value;
+if (!cardholderName || !expiryDate.match(/^(0[1-9]|1[0-2])\/[0-9]{2}$/) || !cvv.match(/^[0-9]{3}$/)) {
+alert('Please fill in all required card details correctly.');
+form.reportValidity();
+return;
+}
+}
+currentStep = current + 1;
+showStep(currentStep);
+updatePaymentDetails();
+}
+
+function prevStep(current) {
+currentStep = current - 1;
+showStep(currentStep);
+}
+
+function updateSectionBar() {
+sectionBarItems.forEach((item, index) => {
+item.classList.toggle('active', index + 1 === currentStep);
+});
+}
+
+function generateTicketTypes() {
+const ticketTypesContainer = document.getElementById('ticketTypes');
+ticketTypesContainer.innerHTML = '';
+const ticketTypes = eventTicketTypes[selectedEvent] || [];
+ticketTypes.forEach((ticket, index) => {
+const ticketType = document.createElement('div');
+ticketType.classList.add('ticket-type');
+ticketType.innerHTML = `<h4>${ticket.type}</h4><p class="ticket-price">$${ticket.price}</p>`;
+ticketType.addEventListener('click', () => {
+document.querySelectorAll('.ticket-type').forEach(t => t.classList.remove('selected'));
+ticketType.classList.add('selected');
+selectedTicketType = ticket.type;
+updatePaymentDetails();
+});
+if (index === 0) {
+ticketType.classList.add('selected');
+selectedTicketType = ticket.type;
+}
+ticketTypesContainer.appendChild(ticketType);
+});
+}
+
+document.getElementById('increaseQty').addEventListener('click', () => {
+const qtyInput = document.getElementById('ticketQty');
+let qty = parseInt(qtyInput.value);
+if (qty < 10) qtyInput.value = selectedQuantity = qty + 1;
+updatePaymentDetails();
+});
+
+document.getElementById('decreaseQty').addEventListener('click', () => {
+const qtyInput = document.getElementById('ticketQty');
+let qty = parseInt(qtyInput.value);
+if (qty > 1) qtyInput.value = selectedQuantity = qty - 1;
+updatePaymentDetails();
+});
+
+document.getElementById('ticketQty').addEventListener('change', () => {
+let qty = parseInt(document.getElementById('ticketQty').value);
+if (isNaN(qty) || qty < 1) qty = 1;
+if (qty > 10) qty = 10;
+document.getElementById('ticketQty').value = selectedQuantity = qty;
+updatePaymentDetails();
+});
+
+document.querySelectorAll('.payment-method').forEach(method => {
+method.addEventListener('click', () => {
+document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+method.classList.add('selected');
+selectedPaymentMethod = method.dataset.method;
+updatePaymentDetails();
+});
+});
+
+document.getElementById('expiryDate').addEventListener('input', (e) => {
+let value = e.target.value.replace(/\D/g, '');
+value = value.slice(0, 4);
+if (value.length >= 2) value = value.slice(0, 2) + '/' + value.slice(2);
+e.target.value = value;
+});
+
+document.getElementById('cvv').addEventListener('input', (e) => {
+e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
+});
+
+function updatePaymentDetails() {
+const ticketTypes = eventTicketTypes[selectedEvent] || [];
+const selectedTicket = ticketTypes.find(t => t.type === selectedTicketType);
+const ticketPrice = selectedTicket ? selectedTicket.price : 0;
+const totalPrice = ticketPrice * selectedQuantity;
+document.getElementById('payEvent').textContent = selectedEvent || '-';
+document.getElementById('payTicketType').textContent = selectedTicketType || '-';
+document.getElementById('payQuantity').textContent = selectedQuantity || '-';
+document.getElementById('ticketPrice').textContent = ticketPrice.toFixed(2);
+document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+}
+
+document.getElementById('proceedBtn').addEventListener('click', () => {
+const ticketTypes = eventTicketTypes[selectedEvent] || [];
+const selectedTicket = ticketTypes.find(t => t.type === selectedTicketType);
+const ticketPrice = selectedTicket ? selectedTicket.price : 0;
+const totalPrice = ticketPrice * selectedQuantity;
+const transactionId = 'EVT' + Math.random().toString(36).substr(2, 9).toUpperCase();
+const refCode = `${selectedEvent.split(' ').map(w => w[0]).join('').toUpperCase()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+document.getElementById('transactionId').textContent = transactionId;
+document.getElementById('referenceCode').textContent = refCode;
+document.getElementById('successMessage').style.display = 'block';
+document.getElementById('ticketEvent').textContent = selectedEvent;
+document.getElementById('ticketType').textContent = selectedTicketType;
+document.getElementById('ticketQuantity').textContent = selectedQuantity;
+document.getElementById('ticketTotal').textContent = totalPrice.toFixed(2);
+document.getElementById('ticketTransaction').textContent = transactionId;
+document.getElementById('ticketReferenceCode').textContent = refCode;
+document.getElementById('ticketPrint').style.display = 'block';
+document.getElementById('printBtn').style.display = 'block';
+document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+});
+
+document.getElementById('printBtn').addEventListener('click', () => {
+const ticket = document.getElementById('ticketPrint');
+const printWindow = window.open('', '_blank');
+printWindow.document.write(`
+<html>
+<head>
+<title>SportBook Ticket - ${selectedEvent}</title>
+<style>
+body { font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f5f5f5; }
+.ticket { width: 350px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); border: 2px dashed #ccc; background: linear-gradient(135deg, #fff, #f9f9f9); position: relative; color: #333; }
+.ticket::before, .ticket::after { content: ''; position: absolute; width: 20px; height: 20px; background: #f5f5f5; border-radius: 50%; border: 2px dashed #ccc; }
+.ticket::before { top: -12px; left: 50%; transform: translateX(-50%); }
+.ticket::after { bottom: -12px; left: 50%; transform: translateX(-50%); }
+.ticket h3 { color: #f84464; margin-bottom: 15px; text-align: center; font-size: 1.5rem; border-bottom: 2px dashed #ccc; padding-bottom: 10px; }
+.ticket p { font-size: 0.9rem; margin: 8px 0; color: #333; display: flex; justify-content: space-between; }
+.ticket p span:last-child { font-weight: 500; }
+.barcode { width: 100%; height: 50px; background: repeating-linear-gradient(90deg, #333 0, #333 2px, transparent 2px, transparent 4px); margin-top: 20px; border-radius: 5px; position: relative; }
+.barcode::before { content: 'SportBook'; position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 0.8rem; color: #6c757d; }
+.ticket-logo { text-align: center; margin-bottom: 15px; font-size: 1.8rem; font-weight: bold; color: #f84464; }
+</style>
+</head>
+<body>${ticket.outerHTML}</body>
+</html>`);
+printWindow.document.close();
+setTimeout(() => printWindow.print(), 500);
+});
+
+window.addEventListener('click', (e) => {
+if (e.target === bookingModal) closeModal();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>Premium Theaters Showcase</title> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <link 
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+<style> 
+:root { 
+--primary-color: #f84464; 
+--primary-hover: #e63353; 
+--secondary-color: #333333; 
+--light-color: #f8f9fa; 
+--dark-color: #212529; 
+--gold-color: #ffd700; 
+--shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
+--transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); } 
+ 
+* { margin: 0; padding: 0; box-sizing: border-box; 
+font-family: 'Poppins', sans-serif; 
+} 
+ 
+body { 
+background-color: #0a0a0a; 
+color: white; overflow-x: hidden; position: relative; 
+} 
+.background-effects { 
+position: fixed; top: 0; 
+left: 0; 
+width: 100%; height: 100%; z-index: -2; overflow: hidden; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); animation: gradientShift 20s ease infinite; 
+} 
+ 
+.particles { position: absolute; 
+top: 0; 
+left: 0; 
+width: 100%; height: 100%; z-index: -1; 
+} 
+ 
+.particle { position: absolute; background: radial-gradient(circle, rgba(248, 68, 100, 0.5), transparent 70%); border-radius: 50%; filter: blur(2px); animation: float 15s infinite linear, pulseGlow 3s ease infinite; 
+} 
+ 
+.wave-bg { position: absolute; width: 100%; height: 100%; overflow: hidden; 
+} 
+ 
+.wave { position: absolute; width: 200%; height: 200%; background: rgba(248, 68, 100, 0.1); border-radius: 40%; animation: wave 25s infinite linear; opacity: 0.2; 
+} 
+.back-btn { position: fixed; top: 20px; right: 20px; padding: 12px 25px; background: linear-gradient(45deg, var(--primary-color), #ff6b88); color: white; border: none; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; z-index: 10; transition: var(--transition); box-shadow: var(--shadow); 
+} 
+ 
+.back-btn:hover { 
+background: linear-gradient(45deg, var(--primary-hover), #e63353); transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 40px rgba(248, 68, 100, 0.5); 
+} 
+ 
+/* Container Styles */ .container { max-width: 1400px; margin: 0 auto; padding: 80px 20px; position: relative; z-index: 1; 
+} 
+ 
+.section-title { 
+text-align: center; margin-bottom: 60px; position: relative; 
+} 
+ 
+.section-title h2 { font-size: 3.5rem; color: white; display: inline-block; padding-bottom: 15px; position: relative; text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); animation: fadeInDown 1s ease-out; 
+} 
+ 
+.section-title h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 200px; height: 5px; background: linear-gradient(90deg, var(--primary-color), var(--gold-color)); border-radius: 5px; box-shadow: 0 5px 20px rgba(248, 68, 100, 0.7); 
+} 
+ 
+.theaters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; margin-bottom: 80px; perspective: 1000px; 
+} 
+ 
+/* Theater Card with Automatic Flip */ 
+.theater-card { 
+position: relative; transform-style: preserve-3d; transition: var(--transition); animation: fadeInUp 0.8s ease-out; animation-fill-mode: both; height: 500px; /* Fixed height for consistent flipping */ 
+} 
+ 
+.theater-card-inner { 
+position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s ease; 
+} 
+ 
+.theater-card:hover .theater-card-inner { 
+transform: rotateY(180deg); 
+} 
+ 
+.theater-front, .theater-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; overflow: hidden; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); 
+box-shadow: var(--shadow); 
+} 
+ 
+.theater-back { transform: rotateY(180deg); padding: 30px; display: flex; flex-direction: column; justify-content: center; text-align: center; background: linear-gradient(135deg, rgba(248, 68, 100, 0.9), rgba(255, 107, 136, 0.9)); position: relative; 
+} 
+ 
+.close-btn { position: absolute; top: 15px; right: 15px; 
+width: 30px; height: 30px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); z-index: 2; 
+} 
+ 
+.close-btn:hover { background: rgba(255, 255, 255, 0.4); transform: scale(1.1); 
+} 
+ 
+.close-btn i { color: white; font-size: 1.2rem; 
+} 
+ 
+.theater-card:hover { transform: scale(1.05); box-shadow: 0 25px 60px rgba(248, 68, 100, 0.7); 
+} 
+ 
+.theater-image { height: 250px; overflow: hidden; 
+position: relative; clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); 
+} 
+ 
+.theater-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+} 
+ 
+.theater-card:hover .theater-image img { transform: scale(1.2) rotate(2deg); 
+} 
+ 
+.theater-image::after { content: ''; position: absolute; top: 0; 
+left: 0; 
+width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(248, 68, 100, 0.1), transparent 70%); opacity: 0; transition: var(--transition); 
+} 
+ 
+.theater-card:hover .theater-image::after { opacity: 1; 
+} 
+ 
+.theater-logo { position: absolute; bottom: -30px; left: 30px; width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); 
+z-index: 2; transition: var(--transition); border: 3px solid var(--gold-color); 
+} 
+ 
+.theater-logo img { width: 70%; height: 70%; object-fit: contain; 
+} 
+ 
+.theater-card:hover .theater-logo { transform: translateY(-10px) scale(1.1); 
+} 
+ 
+.theater-details { padding: 40px 30px 30px; 
+} 
+ 
+.theater-name { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); 
+} 
+ 
+.theater-card:hover .theater-name { color: var(--gold-color); 
+} 
+ 
+.theater-location { display: flex; align-items: center; color: rgba(255, 255, 255, 0.8); font-size: 1rem; margin-bottom: 15px; 
+} 
+ 
+.theater-location i { margin-right: 10px; color: var(--primary-color); font-size: 1.2rem; 
+} 
+ 
+.theater-features { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; 
+} 
+ 
+.feature { background: rgba(248, 68, 100, 0.2); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; transition: var(--transition); 
+} 
+ 
+.theater-card:hover .feature { background: var(--primary-color); 
+} 
+ 
+.theater-description { color: rgba(255, 255, 255, 0.7); font-size: 0.95rem; line-height: 1.6; 
+} 
+ 
+.theater-back h3 { font-size: 1.6rem; color: white; margin-bottom: 15px; 
+} 
+ 
+.theater-back p { font-size: 0.9rem; color: rgba(255, 255, 255, 0.9); line-height: 1.6; 
+} 
+ 
+@keyframes float { 
+0% { transform: translateY(0) rotate(0deg); } 
+100% { transform: translateY(-1000px) rotate(720deg); } 
+} 
+ 
+@keyframes fadeInUp { 
+from { opacity: 0; transform: translateY(50px) rotateX(20deg); } to { opacity: 1; transform: translateY(0) rotateX(0); } 
+} 
+ 
+@keyframes pulseGlow { 
+0% { opacity: 0.3; transform: scale(1); } 
+50% { opacity: 0.5; transform: scale(1.1); } 
+100% { opacity: 0.3; transform: scale(1); } 
+} 
+ 
+@keyframes wave { 
+0% { transform: translate(-50%, -50%) rotate(0deg); } 
+100% { transform: translate(-50%, -50%) rotate(360deg); } 
+} 
+ 
+@keyframes gradientShift { 
+0% { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); } 
+50% { background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); } 
+100% { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); } 
+} 
+ 
+.theater-card:nth-child(1) { animation-delay: 0.1s; } 
+.theater-card:nth-child(2) { animation-delay: 0.2s; } 
+.theater-card:nth-child(3) { animation-delay: 0.3s; } 
+.theater-card:nth-child(4) { animation-delay: 0.4s; } 
+.theater-card:nth-child(5) { animation-delay: 0.5s; } 
+.theater-card:nth-child(6) { animation-delay: 0.6s; } 
+.theater-card:nth-child(7) { animation-delay: 0.7s; } 
+.theater-card:nth-child(8) { animation-delay: 0.8s; } 
+.theater-card:nth-child(9) { animation-delay: 0.9s; } .theater-card:nth-child(10) { animation-delay: 1.0s; } 
+ 
+@media (max-width: 1200px) { 
+.theaters-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } } 
+ 
+@media (max-width: 768px) { 
+.container { padding: 60px 15px; } 
+.section-title h2 { font-size: 2.5rem; } 
+.theaters-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; } 
+.theater-image { height: 220px; } 
+.theater-details { padding: 35px 25px 25px; } 
+.back-btn { padding: 10px 20px; } 
+} 
+ 
+@media (max-width: 576px) { 
+.container { padding: 50px 10px; } 
+.section-title h2 { font-size: 2rem; } 
+.theaters-grid { grid-template-columns: 1fr; gap: 25px; } 
+.theater-name { font-size: 1.6rem; } 
+.back-btn { padding: 8px 15px; font-size: 0.9rem; } 
+} 
+</style> 
+</head> 
+<body> 
+<div class="background-effects"> 
+<div class="particles" id="particles"></div> 
+<div class="wave-bg"> 
+<div class="wave" style="top: 50%; left: 50%;"></div> 
+<div class="wave" style="top: 60%; left: 40%; animation-delay: -5s;"></div> 
+</div> 
+</div> 
+<button class="back-btn"><i class="fas fa-arrow-left"></i> Back</button> 
+ 
+<div class="container"> 
+<div class="section-title"> 
+<h2>Premium Theaters</h2> 
+</div> 
+ 
+<div class="theaters-grid"> 
+<div class="theater-card"> 
+<div class="theater-card-inner"> 
+<div class="theater-front"> 
+<div class="theater-image"> 
+<img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?ixlib=rb4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Royal Opera House"> 
+</div> 
+ 
+<div class="theater-details"> 
+<h3 class="theater-name">Royal Opera House</h3> 
+<div class="theater-location"> 
+<i class="fas fa-map-marker-alt"></i> Mumbai, India 
+</div> 
+<div class="theater-features"> 
+<span class="feature">Dolby Atmos</span> 
+<span class="feature">IMAX</span> 
+<span class="feature">VIP Lounge</span> 
+</div> 
+<p class="theater-description">Experience world-class performances in this historic venue with state-ofthe-art acoustics and luxurious seating.</p> 
+</div> 
+</div> 
+<div class="theater-back"> 
+<div class="close-btn"><i class="fas fa-times"></i></div> 
+<h3>Did You Know?</h3> 
+<p>The Royal Opera House in Mumbai, built in 1911, is one of India’s few remaining Baroque-style buildings, blending Western and Indian architectural elements.</p> 
+</div> 
+</div> 
+</div> 
+ 
+<div class="theater-card"> 
+<div class="theater-card-inner"> 
+<div class="theater-front"> 
+<div class="theater-image"> 
+<img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?ixlib=rb-
+4.0.3&auto=format&fit=crop&w=2070&q=80" alt="The Globe Theater"> 
+</div> 
+<div class="theater-details"> 
+<h3 class="theater-name">The Globe Theater</h3> 
+<div class="theater-location"> 
+<i class="fas fa-map-marker-alt"></i> London, UK 
+</div> 
+<div class="theater-features"> 
+<span class="feature">Shakespeare</span> 
+<span class="feature">Open Air</span> 
+<span class="feature">Historic</span> 
+</div> 
+<p class="theater-description">The iconic open-air theater where Shakespeare's plays were originally performed, now restored to its former glory.</p> 
+</div> 
+</div> 
+<div class="theater-back"> 
+<div class="close-btn"><i class="fas fa-times"></i></div> 
+<h3>Did You Know?</h3> 
+<p>The original Globe Theatre burned down in 1613 during a performance of Henry VIII when a cannon misfired.</p> 
+</div> 
+</div> 
+</div> 
+<div class="theater-card"> 
+<div class="theater-card-inner"> 
+<div class="theater-front"> 
+<div class="theater-image"> 
+<img src="majestic.png" alt="Broadway Theater"> 
+</div> 
+<div class="theater-details"> 
+<h3 class="theater-name">Majestic Broadway</h3> 
+<div class="theater-location"> 
+<i class="fas fa-map-marker-alt"></i> New York, USA 
+</div> 
+<div class="theater-features"> 
+<span class="feature">Musicals</span> 
+<span class="feature">4K Projection</span> 
+<span class="feature">Dine-in</span> </div> 
+<p class="theater-description">The heart of American theater with the latest productions and star-studded performances in an elegant setting.</p> 
+</div> 
+</div> 
+<div class="theater-back"> 
+<div class="close-btn"><i class="fas fa-times"></i></div> 
+<h3>Did You Know?</h3> 
+<p>The Majestic Theatre has hosted "The Phantom of the Opera" since 1988, making it the longestrunning show in Broadway history.</p> 
+</div> 
+</div> 
+</div> 
+ 
+<div class="theater-card"> 
+<div class="theater-card-inner"> 
+<div class="theater-front"> 
+<div class="theater-image"> 
+<img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-
+4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Sydney Opera House"> </div> 
+<div class="theater-details"> 
+<h3 class="theater-name">Sydney Opera House</h3> 
+<div class="theater-location"> 
+<i class="fas fa-map-marker-alt"></i> Sydney, Australia 
+</div> 
+<div class="theater-features"> 
+<span class="feature">Iconic</span> 
+<span class="feature">Multi-venue</span> 
+<span class="feature">Waterfront</span> 
+</div> 
+<p class="theater-description">UNESCO World Heritage Site with stunning architecture and world-class performances across multiple venues.</p> 
+</div> 
+</div> 
+<div class="theater-back"> 
+<div class="close-btn"><i class="fas fa-times"></i></div> 
+<h3>Did You Know?</h3> 
+<p>The Sydney Opera House’s construction took 14 years and cost over $100 million, far exceeding its initial budget.</p> 
+</div> 
+</div> 
+</div> 
+ 
+<div class="theater-card"> 
+<div class="theater-card-inner"> 
+<div class="theater-front"> 
+<div class="theater-image"> 
+<img src="theater2.png" alt="La Scala"> 
+</div> 
+<div class="theater-details"> 
+<h3 class="theater-name">Teatro alla Scala</h3> 
+<div class="theater-location"> 
+<i class="fas fa-map-marker-alt"></i> Milan, Italy 
+</div> 
+<div class="theater-features"> 
+<span class="feature">Opera</span> 
+<span class="feature">Ballet</span> 
+<span class="feature">Classical</span> 
+</div> 
+<p class="theater-description">One of the world's most famous opera houses with a rich history dating back to 1778 and exceptional acoustics.</p> 
+</div> 
+</div> 
+<div class="theater-back"> 
+<div class="close-btn"><i class="fas fa-times"></i></div> 
+<h3>Did You Know?</h3> 
+<p>La Scala’s stage is one of the largest in Italy, measuring over 1,200 square meters.</p> 
+</div> 
+</div> 
+</div> 
+<div class="theater-card"> 
+<div class="theater-card-inner"> 
+<div class="theater-front"> 
+<div class="theater-image"> 
+<img src="https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?ixlib=rb-
+4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Bolshoi Theater"> </div> 
+ 
+<div class="theater-details"> 
+<h3 class="theater-name">Bolshoi Theater</h3> 
+<div class="theater-location"> 
+<i class="fas fa-map-marker-alt"></i> Moscow, Russia 
+</div> 
+<div class="theater-features"> 
+<span class="feature">Ballet</span> 
+<span class="feature">Orchestra</span> 
+<span class="feature">Historic</span> 
+</div> 
+<p class="theater-description">Home to one of the oldest ballet and opera companies in the world with a magnificent neoclassical facade.</p> 
+</div> 
+</div> 
+<div class="theater-back"> 
+<div class="close-btn"><i class="fas fa-times"></i></div> 
+<h3>Did You Know?</h3> 
+<p>The Bolshoi Theatre’s iconic chandelier weighs over 2 tons and is adorned with thousands of crystals.</p> 
+</div> 
+</div> 
+</div> 
+ 
+<!-- Theater 7 --> 
+<div class="theater-card"> 
+<div class="theater-card-inner"> 
+<div class="theater-front"> 
+<div class="theater-image"> 
+<img src="theater7.png" alt="Palais Garnier"> 
+</div> 
+<div class="theater-details"> 
+<h3 class="theater-name">Palais Garnier</h3> 
+<div class="theater-location"> 
+<i class="fas fa-map-marker-alt"></i> Paris, France 
+</div> 
+<div class="theater-features"> 
+<span class="feature">Opulent</span> 
+<span class="feature">Chandelier</span> 
+<span class="feature">Gilded</span> 
+</div> 
+<p class="theater-description">The opulent 19th-century opera house that inspired "The Phantom of the Opera" with its breathtaking architecture.</p> 
+</div> 
+</div> 
+<div class="theater-back"> 
+<div class="close-btn"><i class="fas fa-times"></i></div> 
+<h3>Did You Know?</h3> 
+<p>The Palais Garnier’s Grand Staircase is made of white marble and features a 30-meter-high ceiling.</p> 
+</div> 
+</div> 
+</div><div class="theater-card"> 
+<div class="theater-card-inner"> 
+<div class="theater-front"> 
+<div class="theater-image"> 
+<img src="theater5.png" alt="Metropolitan Opera"> 
+</div> 
+<div class="theater-details"> 
+<h3 class="theater-name">Metropolitan Opera</h3> 
+<div class="theater-location"> 
+<i class="fas fa-map-marker-alt"></i> New York, USA 
+</div> 
+<div class="theater-features"> 
+<span class="feature">Modern</span> 
+<span class="feature">HD Broadcasts</span> 
+<span class="feature">Grand</span> 
+</div> 
+<p class="theater-description">One of the world's premier opera companies with innovative productions and cutting-edge technology.</p> 
+</div> 
+</div> 
+<div class="theater-back"> 
+<div class="close-btn"><i class="fas fa-times"></i></div> 
+<h3>Did You Know?</h3> 
+<p>The Met Opera features five massive chandeliers that rise to the ceiling before each performance begins.</p> 
+</div> 
+</div> 
+</div><div class="theater-card"> 
+<div class="theater-card-inner"> 
+<div class="theater-front"> 
+<div class="theater-image"> 
+<img src="theater8.png" alt="Elgin Theatre"> 
+</div><div class="theater-details"> 
+<h3 class="theater-name">Elgin Theatre</h3> 
+<div class="theater-location"> 
+<i class="fas fa-map-marker-alt"></i> Toronto, Canada 
+</div> 
+<div class="theater-features"> 
+<span class="feature">Restored</span> 
+<span class="feature">Intimate</span> 
+<span class="feature">Versatile</span> 
+</div> 
+<p class="theater-description">A beautifully restored vaudeville theater offering an intimate setting for a variety of performances.</p> 
+</div> 
+</div> 
+<div class="theater-back"> 
+<div class="close-btn"><i class="fas fa-times"></i></div> 
+<h3>Did You Know?</h3> 
+<p>The Elgin Theatre, opened in 1913, was one of the first theaters in Canada designed specifically for film and vaudeville.</p> 
+</div> 
+</div> 
+</div><div class="theater-card"> 
+<div class="theater-card-inner"> 
+<div class="theater-front"> 
+<div class="theater-image"> 
+<img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-
+4.0.3&auto=format&fit=crop&w=2070&q=80" alt="National Theatre"> 
+</div> 
+<div class="theater-details"> 
+<h3 class="theater-name">National Theatre</h3> 
+<div class="theater-location"> 
+<i class="fas fa-map-marker-alt"></i> London, UK 
+</div> 
+<div class="theater-features"> 
+<span class="feature">Contemporary</span> 
+<span class="feature">Diverse</span> 
+<span class="feature">Innovative</span> 
+</div> 
+<p class="theater-description">A hub for contemporary British theater with three auditoriums showcasing innovative productions.</p> 
+</div> 
+</div> 
+<div class="theater-back"> 
+<div class="close-btn"><i class="fas fa-times"></i></div> 
+<h3>Did You Know?</h3> 
+<p>The National Theatre’s brutalist design by Sir Denys Lasdun was initially controversial but is now a celebrated landmark.</p> 
+</div></div> 
+</div></div> </div><script> 
+const particlesContainer = document.getElementById('particles'); for (let i = 0; i < 50; i++) { const particle = document.createElement('div'); 
+particle.classList.add('particle'); const size = Math.random() * 10 + 5; particle.style.width = `${size}px`; particle.style.height = `${size}px`; particle.style.left = `${Math.random() * 100}%`; particle.style.top = `${Math.random() * 100}%`; 
+particle.style.animationDuration = `${Math.random() * 20 + 10}s`; particle.style.animationDelay = `${Math.random() * 5}s`; particle.style.opacity = Math.random() * 0.5 + 0.1; particlesContainer.appendChild(particle); 
+} const closeButtons = document.querySelectorAll('.close-btn'); closeButtons.forEach(btn => { btn.addEventListener('click', (e) => { 
+e.stopPropagation(); // Prevent hover from triggering again const cardInner = btn.closest('.theater-card-inner'); cardInner.style.transform = 'rotateY(0deg)'; 
+}); 
+}); const backBtn = document.querySelector('.back-btn'); backBtn.addEventListener('click', () => { window.history.back();  
+}); 
+</script> 
+</body> 
+</html> 

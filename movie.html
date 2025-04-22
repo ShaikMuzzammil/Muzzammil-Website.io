@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Quest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #f84464;
+            --primary-hover: #e63353;
+            --secondary-color: #333333;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --glow-color: rgba(248, 68, 100, 0.5);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #0f2027);
+            background-size: 600% 600%;
+            animation: gradientBG 20s ease infinite;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 100%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 0%; }
+            100% { background-position: 0% 50%; }
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1002;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .back-button:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+        .back-button .fallback-text {
+            display: none;
+            font-size: 0.8rem;
+        }
+        .back-button.no-icon .fas {
+            display: none;
+        }
+        .back-button.no-icon .fallback-text {
+            display: inline-block;
+        }
+        .modal-back-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1003;
+            cursor: pointer;
+        }
+        .modal-back-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+        .modal-back-btn .fallback-text {
+            display: none;
+            font-size: 0.8rem;
+        }
+        .modal-back-btn.no-icon .fas {
+            display: none;
+        }
+        .modal-back-btn.no-icon .fallback-text {
+            display: inline-block;
+        }
+        #step1 .modal-back-btn {
+            display: none;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: white;
+            display: inline-block;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--glow-color);
+            animation: titleSlideIn 1.5s ease forwards;
+        }
+        @keyframes titleSlideIn {
+            0% { opacity: 0; transform: translateY(-100px) scale(0.8); }
+            50% { opacity: 0.6; transform: translateY(20px) scale(1.1); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .section-title h2 span {
+            display: inline-block;
+            opacity: 0;
+            animation: letterBounce 0.6s ease forwards;
+        }
+        .section-title h2 span:nth-child(1) { animation-delay: 0.1s; }
+        .section-title h2 span:nth-child(2) { animation-delay: 0.15s; }
+        .section-title h2 span:nth-child(3) { animation-delay: 0.2s; }
+        .section-title h2 span:nth-child(4) { animation-delay: 0.25s; }
+        .section-title h2 span:nth-child(5) { animation-delay: 0.3s; }
+        .section-title h2 span:nth-child(6) { animation-delay: 0.35s; }
+        .section-title h2 span:nth-child(7) { animation-delay: 0.4s; }
+        .section-title h2 span:nth-child(8) { animation-delay: 0.45s; }
+        .section-title h2 span:nth-child(9) { animation-delay: 0.5s; }
+        .section-title h2 span:nth-child(10) { animation-delay: 0.55s; }
+        .section-title h2 span:nth-child(11) { animation-delay: 0.6s; }
+        .section-title h2 span:nth-child(12) { animation-delay: 0.65s; }
+        .section-title h2 span:nth-child(13) { animation-delay: 0.7s; }
+        @keyframes letterBounce {
+            0% { opacity: 0; transform: translateY(30px) scale(0.5); }
+            60% { opacity: 1; transform: translateY(-10px) scale(1.2); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .section-title h2::before {
+            content: 'CineBook';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 5px;
+            opacity: 0;
+            animation: fadeInGlow 1s ease forwards 1.5s;
+        }
+        @keyframes fadeInGlow {
+            0% { opacity: 0; top: -40px; text-shadow: none; }
+            100% { opacity: 1; top: -50px; text-shadow: 0 0 10px var(--glow-color); }
+        }
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), #ff6b88);
+            border-radius: 2px;
+            animation: lineGlow 1.5s ease forwards;
+        }
+        @keyframes lineGlow {
+            0% { width: 0; opacity: 0; }
+            50% { width: 150px; opacity: 0.5; box-shadow: 0 0 10px var(--glow-color); }
+            100% { width: 100px; opacity: 1; box-shadow: 0 0 5px var(--glow-color); }
+        }
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        .movie-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .movie-card:nth-child(1) { animation-delay: 0.1s; }
+        .movie-card:nth-child(2) { animation-delay: 0.2s; }
+        .movie-card:nth-child(3) { animation-delay: 0.3s; }
+        .movie-card:nth-child(4) { animation-delay: 0.4s; }
+        .movie-card:nth-child(5) { animation-delay: 0.5s; }
+        .movie-card:nth-child(6) { animation-delay: 0.6s; }
+        .movie-card:nth-child(7) { animation-delay: 0.7s; }
+        .movie-card:nth-child(8) { animation-delay: 0.8s; }
+        .movie-card:nth-child(9) { animation-delay: 0.9s; }
+        .movie-card:nth-child(10) { animation-delay: 1.0s; }
+        .movie-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(248, 68, 100, 0.3);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        .movie-poster {
+            height: 340px;
+            overflow: hidden;
+            position: relative;
+        }
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .movie-card:hover .movie-poster img {
+            transform: scale(1.1);
+        }
+        .movie-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            z-index: 2;
+            transition: var(--transition);
+        }
+        .movie-badge i {
+            margin-right: 5px;
+            color: #ffc107;
+        }
+        .movie-card:hover .movie-badge {
+            background-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        .movie-info {
+            padding: 20px;
+            position: relative;
+        }
+        .movie-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color 0.3s ease;
+            color: white;
+        }
+        .movie-card:hover .movie-title {
+            color: var(--primary-color);
+        }
+        .movie-genre {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .movie-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .rating {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            color: white;
+        }
+        .rating i {
+            color: #ffc107;
+            margin-right: 5px;
+            font-size: 0.9rem;
+        }
+        .movie-card:hover .rating {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .movie-card:hover .rating i {
+            color: white;
+        }
+        .book-btn {
+            padding: 8px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .book-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(248, 68, 100, 0.4);
+        }
+        .movie-poster::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 50%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .movie-card:hover .movie-poster::after {
+            opacity: 1;
+        }
+        .booking-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .booking-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .booking-step {
+            display: none;
+        }
+        .booking-step.active {
+            display: block;
+        }
+        .booking-section {
+            margin-bottom: 20px;
+        }
+        .booking-section h3 {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .booking-section h3::after {
+            content: '';
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+        .city-list, .theater-list, .time-slots, .seat-grid, .snacks-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .city-item, .theater-item, .time-slot, .seat, .snack-item {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+        }
+        .city-item:hover, .theater-item:hover, .time-slot:hover, .seat:hover, .snack-item:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        .city-item.selected, .theater-item.selected, .time-slot.selected, .seat.selected, .snack-item.selected {
+            background: var(--primary-hover);
+            box-shadow: 0 5px 15px rgba(248, 68, 100, 0.4);
+        }
+        .city-item, .theater-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 120px;
+        }
+        .city-item img, .theater-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .screen {
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(to right, #f5f5f5, #e0e0e0, #f5f5f5);
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .seat-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .seat {
+            padding: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .seat.occupied {
+            background: rgba(255, 0, 0, 0.2);
+            cursor: not-allowed;
+        }
+        .snacks-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        .snack-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            text-align: center;
+        }
+        .snack-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .snack-price {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .payment-details {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            color: white;
+        }
+        .payment-details p {
+            font-size: 0.95rem;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .total-price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.3);
+        }
+        .nav-btn {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 10px 5px 0 0;
+        }
+        .nav-btn:hover {
+            background: var(--primary-hover);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(248, 68, 100, 0.4);
+        }
+        .nav-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .nav-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .success-message {
+            text-align: center;
+            padding: 20px;
+            background: rgba(40, 167, 69, 0.2);
+            color: #d4edda;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+        .ticket {
+            background: linear-gradient(135deg, #fff, #f9f9f9);
+            width: 350px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin: 20px auto;
+            position: relative;
+            display: none;
+            border: 2px dashed #ccc;
+            color: #333;
+        }
+        .ticket::before, .ticket::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #f5f5f5;
+            border-radius: 50%;
+            border: 2px dashed #ccc;
+        }
+        .ticket::before {
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .ticket::after {
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .ticket h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            border-bottom: 2px dashed #ccc;
+            padding-bottom: 10px;
+        }
+        .ticket p {
+            font-size: 0.9rem;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .ticket .barcode {
+            width: 100%;
+            height: 50px;
+            background: repeating-linear-gradient(90deg, #333 0, #333 2px, transparent 2px, transparent 4px);
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .ticket-logo {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        @media (max-width: 768px) {
+            .booking-content {
+                width: 95%;
+                padding: 20px;
+            }
+            .seat-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            .snacks-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .ticket {
+                width: 280px;
+            }
+            .back-button {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            .seat-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .city-item, .theater-item {
+                min-width: 100px;
+            }
+            .city-item img, .theater-item img {
+                width: 60px;
+                height: 60px;
+            }
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" onclick="history.back(); return false;" class="back-button" title="Go Back">
+        <i class="fas fa-arrow-left"></i>
+        <span class="fallback-text">Back</span>
+    </a>
+
+    <div class="container">
+        <div class="section-title">
+            <h2>
+                <span>R</span><span>E</span><span>C</span><span>O</span><span>M</span><span>M</span><span>E</span><span>N</span><span>D</span><span>E</span><span>D</span><span> </span>
+                <span>M</span><span>O</span><span>V</span><span>I</span><span>E</span><span>S</span>
+            </h2>
+        </div>
+
+        <div class="movies-grid">
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <img src="rrr.png" alt="RRR">
+                    <span class="movie-badge"><i class="fas fa-star"></i> 8.6</span>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">RRR</h3>
+                    <p class="movie-genre">Biography, Drama, History</p>
+                    <div class="movie-meta">
+                        <div class="rating"><i class="fas fa-star"></i><span>8.6/10</span></div>
+                        <button class="book-btn" data-movie="RRR">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <img src="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg" alt="The Dark Knight">
+                    <span class="movie-badge"><i class="fas fa-star"></i> 9.0</span>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Dark Knight</h3>
+                    <p class="movie-genre">Action, Crime, Drama</p>
+                    <div class="movie-meta">
+                        <div class="rating"><i class="fas fa-star"></i><span>9.0/10</span></div>
+                        <button class="book-btn" data-movie="The Dark Knight">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg" alt="Inception">
+                    <span class="movie-badge"><i class="fas fa-star"></i> 8.8</span>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Inception</h3>
+                    <p class="movie-genre">Action, Adventure, Sci-Fi</p>
+                    <div class="movie-meta">
+                        <div class="rating"><i class="fas fa-star"></i><span>8.8/10</span></div>
+                        <button class="book-btn" data-movie="Inception">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" alt="Interstellar">
+                    <span class="movie-badge"><i class="fas fa-star"></i> 8.7</span>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Interstellar</h3>
+                    <p class="movie-genre">Adventure, Drama, Sci-Fi</p>
+                    <div class="movie-meta">
+                        <div class="rating"><i class="fas fa-star"></i><span>8.7/10</span></div>
+                        <button class="book-btn" data-movie="Interstellar">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <img src="saaho.png" alt="Saaho">
+                    <span class="movie-badge"><i class="fas fa-star"></i> 8.6</span>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Saaho</h3>
+                    <p class="movie-genre">Drama, Thriller</p>
+                    <div class="movie-meta">
+                        <div class="rating"><i class="fas fa-star"></i><span>8.6/10</span></div>
+                        <button class="book-btn" data-movie="Saaho">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <img src="narnia.png" alt="Narnia">
+                    <span class="movie-badge"><i class="fas fa-star"></i> 9.3</span>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Narnia</h3>
+                    <p class="movie-genre">Drama</p>
+                    <div class="movie-meta">
+                        <div class="rating"><i class="fas fa-star"></i><span>9.3/10</span></div>
+                        <button class="book-btn" data-movie="Narnia">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <img src="mazerunner.png" alt="The Maze Runner">
+                    <span class="movie-badge"><i class="fas fa-star"></i> 9.2</span>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Maze Runner</h3>
+                    <p class="movie-genre">Adventure, Drama</p>
+                    <div class="movie-meta">
+                        <div class="rating"><i class="fas fa-star"></i><span>9.2/10</span></div>
+                        <button class="book-btn" data-movie="The Maze Runner">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <img src="jack.png" alt="Jack The Giant Slayer">
+                    <span class="movie-badge"><i class="fas fa-star"></i> 8.9</span>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Jack The Giant Slayer</h3>
+                    <p class="movie-genre">Adventure, Drama</p>
+                    <div class="movie-meta">
+                        <div class="rating"><i class="fas fa-star"></i><span>8.9/10</span></div>
+                        <button class="book-btn" data-movie="Jack The Giant Slayer">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <img src="avengers.png" alt="Avengers: Endgame">
+                    <span class="movie-badge"><i class="fas fa-star"></i> 8.7</span>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Avengers: Endgame</h3>
+                    <p class="movie-genre">Action, Sci-Fi</p>
+                    <div class="movie-meta">
+                        <div class="rating"><i class="fas fa-star"></i><span>8.7/10</span></div>
+                        <button class="book-btn" data-movie="Avengers: Endgame">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card">
+                <div class="movie-poster">
+                    <img src="radheshyam.png" alt="Radhe Shyam">
+                    <span class="movie-badge"><i class="fas fa-star"></i> 9.1</span>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Radhe Shyam</h3>
+                    <p class="movie-genre">Drama, Romance</p>
+                    <div class="movie-meta">
+                        <div class="rating"><i class="fas fa-star"></i><span>8.8/10</span></div>
+                        <button class="book-btn" data-movie="Radhe Shyam">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="booking-modal" id="bookingModal">
+        <div class="booking-content">
+            <div class="modal-back-btn" onclick="prevStep(currentStep)" title="Previous Step">
+                <i class="fas fa-arrow-left"></i>
+                <span class="fallback-text">Back</span>
+            </div>
+            <div class="booking-section">
+                <h3 id="bookingMovieTitle">Book Tickets</h3>
+            </div>
+            <div class="booking-step active" id="step1">
+                <div class="booking-section">
+                    <h3>Select City</h3>
+                    <div class="city-list">
+                        <div class="city-item" data-city="Chennai"><img src="chennai.png" alt="Chennai"><span>Chennai</span></div>
+                        <div class="city-item" data-city="Ap"><img src="ap.png" alt="AP"><span>AP</span></div>
+                        <div class="city-item" data-city="Bangalore"><img src="bng.png" alt="Bangalore"><span>Bangalore</span></div>
+                        <div class="city-item" data-city="Hyderabad"><img src="hyd.png" alt="Hyderabad"><span>Hyderabad</span></div>
+                        <div class="city-item" data-city="Delhi"><img src="taj.png" alt="Delhi"><span>Delhi</span></div>
+                    </div>
+                </div>
+                <button class="nav-btn" onclick="nextStep(1)">Next</button>
+            </div>
+            <div class="booking-step" id="step2">
+                <div class="booking-section">
+                    <h3>Select Theater</h3>
+                    <div class="theater-list">
+                        <div class="theater-item" data-theater="PVR Cinemas"><img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b" alt="PVR Cinemas"><span>PVR Cinemas</span></div>
+                        <div class="theater-item" data-theater="INOX"><img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c" alt="INOX"><span>INOX</span></div>
+                        <div class="theater-item" data-theater="Cinepolis"><img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba" alt="Cinepolis"><span>Cinepolis</span></div>
+                    </div>
+                </div>
+                <div class="booking-section">
+                    <h3>Select Time</h3>
+                    <div class="time-slots">
+                        <div class="time-slot" data-time="10:00 AM">10:00 AM</div>
+                        <div class="time-slot" data-time="1:00 PM">1:00 PM</div>
+                        <div class="time-slot" data-time="4:00 PM">4:00 PM</div>
+                        <div class="time-slot" data-time="7:00 PM">7:00 PM</div>
+                    </div>
+                </div>
+                <button class="nav-btn" onclick="nextStep(2)">Next</button>
+                <button class="nav-btn secondary" onclick="prevStep(2)">Previous</button>
+            </div>
+            <div class="booking-step" id="step3">
+                <div class="booking-section">
+                    <h3>Select Seats</h3>
+                    <div class="screen">SCREEN THIS WAY</div>
+                    <div class="seat-grid" id="seatGrid"></div>
+                </div>
+                <button class="nav-btn" onclick="nextStep(3)">Next</button>
+                <button class="nav-btn secondary" onclick="prevStep(3)">Previous</button>
+            </div>
+            <div class="booking-step" id="step4">
+                <div class="booking-section">
+                    <h3>Add Snacks</h3>
+                    <div class="snacks-grid">
+                        <div class="snack-item" data-snack="Popcorn (Large)" data-price="5"><img src="popcorn.png" alt="Popcorn"><p>Popcorn (Large)</p><p class="snack-price">$5</p></div>
+                        <div class="snack-item" data-snack="Nachos with Cheese" data-price="6"><img src="cheese.png" alt="Nachos"><p>Nachos with Cheese</p><p class="snack-price">$6</p></div>
+                        <div class="snack-item" data-snack="Cola (Large)" data-price="3"><img src="cola.png" alt="Cola"><p>Cola (Large)</p><p class="snack-price">$3</p></div>
+                        <div class="snack-item" data-snack="Hot Dog" data-price="4"><img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b" alt="Hot Dog"><p>Hot Dog</p><p class="snack-price">$4</p></div>
+                        <div class="snack-item" data-snack="Chocolate Bar" data-price="2.5"><img src="https://images.unsplash.com/photo-1575377427642-087cf684f29d" alt="Chocolate"><p>Chocolate Bar</p><p class="snack-price">$2.5</p></div>
+                        <div class="snack-item" data-snack="Ice Cream" data-price="3.5"><img src="https://images.unsplash.com/photo-1560008581-09826d1de69e" alt="Ice Cream"><p>Ice Cream</p><p class="snack-price">$3.5</p></div>
+                    </div>
+                </div>
+                <button class="nav-btn" onclick="nextStep(4)">Next</button>
+                <button class="nav-btn secondary" onclick="prevStep(4)">Previous</button>
+            </div>
+            <div class="booking-step" id="step5">
+                <div class="booking-section payment-details" id="paymentDetails">
+                    <h3>Payment Details</h3>
+                    <p><span>Movie:</span> <span id="payMovie"></span></p>
+                    <p><span>City:</span> <span id="payCity"></span></p>
+                    <p><span>Theater:</span> <span id="payTheater"></span></p>
+                    <p><span>Time:</span> <span id="payTime"></span></p>
+                    <p><span>Seats:</span> <span id="paySeats"></span></p>
+                    <p><span>Tickets Price:</span> $<span id="ticketPrice">0</span></p>
+                    <p><span>Snacks:</span> <span id="paySnacks"></span></p>
+                    <p><span>Snacks Price:</span> $<span id="snacksPrice">0</span></p>
+                    <p class="total-price"><span>Total:</span> $<span id="totalPrice">0</span></p>
+                </div>
+                <button class="nav-btn" id="proceedBtn">Proceed to Pay</button>
+                <button class="nav-btn secondary" onclick="prevStep(5)">Previous</button>
+                <div class="success-message" id="successMessage" style="display: none;">
+                    <h3>Tickets Booked Successfully!</h3>
+                    <p>Your transaction ID: <span id="transactionId"></span></p>
+                </div>
+                <div class="ticket" id="ticketPrint" style="display: none;">
+                    <div class="ticket-logo">CineBook</div>
+                    <h3>Movie Ticket</h3>
+                    <p><span>Movie:</span> <span id="ticketMovie"></span></p>
+                    <p><span>City:</span> <span id="ticketCity"></span></p>
+                    <p><span>Theater:</span> <span id="ticketTheater"></span></p>
+                    <p><span>Time:</span> <span id="ticketTime"></span></p>
+                    <p><span>Seats:</span> <span id="ticketSeats"></span></p>
+                    <p><span>Snacks:</span> <span id="ticketSnacks"></span></p>
+                    <p><span>Total Paid:</span> $<span id="ticketTotal"></span></p>
+                    <p><span>Transaction ID:</span> <span id="ticketTransaction"></span></p>
+                    <div class="barcode"></div>
+                </div>
+                <button class="nav-btn" id="printBtn" style="display: none;">Print Ticket</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedMovie = '';
+        let selectedCity = '';
+        let selectedTheater = '';
+        let selectedTime = '';
+        let selectedSeats = [];
+        let selectedSnacks = [];
+        const ticketPricePerSeat = 12;
+        let currentStep = 1;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Page-level back button
+            const backButton = document.querySelector('.back-button');
+            if (backButton) {
+                const icon = backButton.querySelector('.fas');
+                if (!icon.offsetWidth) {
+                    backButton.classList.add('no-icon');
+                }
+            }
+            // Modal back button
+            const modalBackButton = document.querySelector('.modal-back-btn');
+            if (modalBackButton) {
+                const icon = modalBackButton.querySelector('.fas');
+                if (!icon.offsetWidth) {
+                    modalBackButton.classList.add('no-icon');
+                }
+            }
+        });
+
+        document.querySelectorAll('.book-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectedMovie = btn.dataset.movie;
+                document.getElementById('bookingMovieTitle').textContent = `Book Tickets - ${selectedMovie}`;
+                document.getElementById('bookingModal').style.display = 'flex';
+                currentStep = 1;
+                showStep(currentStep);
+                generateSeats();
+                updatePaymentDetails();
+            });
+        });
+
+        function resetSelections() {
+            selectedCity = '';
+            selectedTheater = '';
+            selectedTime = '';
+            selectedSeats = [];
+            selectedSnacks = [];
+            currentStep = 1;
+            document.querySelectorAll('.selected').forEach(item => item.classList.remove('selected'));
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('ticketPrint').style.display = 'none';
+            document.getElementById('printBtn').style.display = 'none';
+            showStep(currentStep);
+            updatePaymentDetails();
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.booking-step').forEach(s => s.classList.remove('active'));
+            document.getElementById(`step${step}`).classList.add('active');
+            document.querySelector('.booking-content').scrollTop = 0;
+        }
+
+        function nextStep(current) {
+            if (current === 1 && !selectedCity) {
+                alert('Please select a city.');
+                return;
+            }
+            if (current === 2 && (!selectedTheater || !selectedTime)) {
+                alert('Please select a theater and time.');
+                return;
+            }
+            if (current === 3 && selectedSeats.length === 0) {
+                alert('Please select at least one seat.');
+                return;
+            }
+            currentStep = current + 1;
+            showStep(currentStep);
+            updatePaymentDetails();
+        }
+
+        function prevStep(current) {
+            currentStep = current - 1;
+            showStep(currentStep);
+            updatePaymentDetails();
+        }
+
+        function generateSeats() {
+            const seatGrid = document.getElementById('seatGrid');
+            seatGrid.innerHTML = '';
+            for (let row = 0; row < 5; row++) {
+                const rowLetter = String.fromCharCode(65 + row);
+                for (let seatNum = 1; seatNum <= 10; seatNum++) {
+                    const seat = document.createElement('div');
+                    seat.classList.add('seat');
+                    seat.textContent = `${rowLetter}${seatNum}`;
+                    if (Math.random() < 0.2) {
+                        seat.classList.add('occupied');
+                        seat.title = 'Occupied';
+                    } else {
+                        seat.addEventListener('click', () => toggleSelection(seat, selectedSeats, `${rowLetter}${seatNum}`));
+                    }
+                    seatGrid.appendChild(seat);
+                }
+            }
+        }
+
+        function toggleSelection(element, array, value) {
+            element.classList.toggle('selected');
+            const index = array.indexOf(value);
+            if (index === -1) array.push(value);
+            else array.splice(index, 1);
+            updatePaymentDetails();
+        }
+
+        document.querySelectorAll('.city-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.city-item').forEach(i => i.classList.remove('selected'));
+                item.classList.add('selected');
+                selectedCity = item.dataset.city;
+                updatePaymentDetails();
+            });
+        });
+
+        document.querySelectorAll('.theater-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.theater-item').forEach(i => i.classList.remove('selected'));
+                item.classList.add('selected');
+                selectedTheater = item.dataset.theater;
+                updatePaymentDetails();
+            });
+        });
+
+        document.querySelectorAll('.time-slot').forEach(slot => {
+            slot.addEventListener('click', () => {
+                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                slot.classList.add('selected');
+                selectedTime = slot.dataset.time;
+                updatePaymentDetails();
+            });
+        });
+
+        document.querySelectorAll('.snack-item').forEach(snack => {
+            snack.addEventListener('click', () => {
+                const snackData = { name: snack.dataset.snack, price: parseFloat(snack.dataset.price) };
+                const existingIndex = selectedSnacks.findIndex(s => s.name === snackData.name);
+                if (existingIndex >= 0) {
+                    selectedSnacks.splice(existingIndex, 1);
+                    snack.classList.remove('selected');
+                } else {
+                    selectedSnacks.push(snackData);
+                    snack.classList.add('selected');
+                }
+                updatePaymentDetails();
+            });
+        });
+
+        function updatePaymentDetails() {
+            const ticketCost = selectedSeats.length * ticketPricePerSeat;
+            const snacksCost = selectedSnacks.reduce((sum, snack) => sum + snack.price, 0);
+            const totalCost = ticketCost + snacksCost;
+            document.getElementById('payMovie').textContent = selectedMovie || '-';
+            document.getElementById('payCity').textContent = selectedCity || '-';
+            document.getElementById('payTheater').textContent = selectedTheater || '-';
+            document.getElementById('payTime').textContent = selectedTime || '-';
+            document.getElementById('paySeats').textContent = selectedSeats.join(', ') || '-';
+            document.getElementById('ticketPrice').textContent = ticketCost.toFixed(2);
+            document.getElementById('paySnacks').textContent = selectedSnacks.map(s => s.name).join(', ') || '-';
+            document.getElementById('snacksPrice').textContent = snacksCost.toFixed(2);
+            document.getElementById('totalPrice').textContent = totalCost.toFixed(2);
+        }
+
+        document.getElementById('proceedBtn').addEventListener('click', () => {
+            const transactionId = 'TXN' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            document.getElementById('transactionId').textContent = transactionId;
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('ticketMovie').textContent = selectedMovie;
+            document.getElementById('ticketCity').textContent = selectedCity;
+            document.getElementById('ticketTheater').textContent = selectedTheater;
+            document.getElementById('ticketTime').textContent = selectedTime;
+            document.getElementById('ticketSeats').textContent = selectedSeats.join(', ');
+            document.getElementById('ticketSnacks').textContent = selectedSnacks.map(s => s.name).join(', ') || 'None';
+            document.getElementById('ticketTotal').textContent = document.getElementById('totalPrice').textContent;
+            document.getElementById('ticketTransaction').textContent = transactionId;
+            document.getElementById('ticketPrint').style.display = 'block';
+            document.getElementById('printBtn').style.display = 'block';
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.getElementById('printBtn').addEventListener('click', () => {
+            const ticket = document.getElementById('ticketPrint');
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>CineBook Ticket - ${selectedMovie}</title>
+                    <style>
+                        body { font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f5f5f5; }
+                        .ticket { width: 350px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); border: 2px dashed #ccc; background: linear-gradient(135deg, #fff, #f9f9f9); position: relative; color: #333; }
+                        .ticket::before, .ticket::after { content: ''; position: absolute; width: 20px; height: 20px; background: #f5f5f5; border-radius: 50%; border: 2px dashed #ccc; }
+                        .ticket::before { top: -12px; left: 50%; transform: translateX(-50%); }
+                        .ticket::after { bottom: -12px; left: 50%; transform: translateX(-50%); }
+                        .ticket h3 { color: #f84464; margin-bottom: 15px; text-align: center; font-size: 1.5rem; border-bottom: 2px dashed #ccc; padding-bottom: 10px; }
+                        .ticket p { font-size: 0.9rem; margin: 8px 0; display: flex; justify-content: space-between; }
+                        .barcode { width: 100%; height: 50px; background: repeating-linear-gradient(90deg, #333 0, #333 2px, transparent 2px, transparent 4px); margin-top: 20px; border-radius: 5px; }
+                        .ticket-logo { text-align: center; margin-bottom: 15px; font-size: 1.8rem; font-weight: bold; color: #f84464; }
+                    </style>
+                </head>
+                <body>${ticket.outerHTML}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            setTimeout(() => printWindow.print(), 500);
+        });
+    </script>
+</body>
+</html>
