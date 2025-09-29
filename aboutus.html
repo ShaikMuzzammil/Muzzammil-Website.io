@@ -1,585 +1,586 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - TicketMaster</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        :root {
-            --primary: #1a73e8;
-            --secondary: #34a853;
-            --dark: #0a0a12;
-            --darker: #050508;
-            --light: rgba(255,255,255,0.9);
-            --lighter: rgba(255,255,255,0.7);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - TicketMaster</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+:root {
+--primary: #1a73e8;
+--secondary: #34a853;
+--dark: #0a0a12;
+--darker: #050508;
+--light: rgba(255,255,255,0.9);
+--lighter: rgba(255,255,255,0.7);
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Poppins', sans-serif;
+}
 
-        body {
-            background: var(--darker);
-            color: var(--light);
-            line-height: 1.6;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
+body {
+background: var(--darker);
+color: var(--light);
+line-height: 1.6;
+overflow-x: hidden;
+scroll-behavior: smooth;
+}
 
-        .back-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--light);
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
+.back-button {
+position: fixed;
+top: 20px;
+right: 20px;
+z-index: 1000;
+width: 50px;
+height: 50px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--light);
+text-decoration: none;
+font-size: 1.5rem;
+transition: all 0.3s ease;
+backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+}
 
-        .back-button:hover {
-            background: var(--primary);
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
-        }
+.back-button:hover {
+background: var(--primary);
+transform: scale(1.1);
+box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+}
 
-        .back-button svg {
-            width24px;
-            height: 24px;
-            stroke: var(--light);
-        }
+.back-button svg {
+width24px;
+height: 24px;
+stroke: var(--light);
+}
 
-        .hero-section {
-            position: relative;
-            height: 100vh;
-            background: url('https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c') no-repeat center center/cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-        }
+.hero-section {
+position: relative;
+height: 100vh;
+background: url('https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c') no-repeat center center/cover;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+overflow: hidden;
+}
 
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            opacity: 0.3;
-        }
+.hero-video {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+object-fit: cover;
+z-index: 0;
+opacity: 0.3;
+}
 
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(26, 115, 232, 0.85) 0%, rgba(5, 5, 8, 0.95) 100%);
-            z-index: 1;
-        }
+.overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(135deg, rgba(26, 115, 232, 0.85) 0%, rgba(5, 5, 8, 0.95) 100%);
+z-index: 1;
+}
 
-        .content {
-            position: relative;
-            z-index: 2;
-            padding: 0 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+.content {
+position: relative;
+z-index: 2;
+padding: 0 20px;
+max-width: 1200px;
+margin: 0 auto;
+}
 
-        h1 {
-            font-size: 5rem;
-            font-weight: 800;
-            animation: fadeInDown 1.5s ease;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(26, 115, 232, 0.3);
-            line-height: 1.2;
-        }
+h1 {
+font-size: 5rem;
+font-weight: 800;
+animation: fadeInDown 1.5s ease;
+margin-bottom: 20px;
+background: linear-gradient(90deg, var(--primary), var(--secondary));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+text-shadow: 0 0 30px rgba(26, 115, 232, 0.3);
+line-height: 1.2;
+}
 
-        .subtitle {
-            font-size: 1.8rem;
-            margin: 20px auto 40px;
-            animation: fadeInUp 1.5s ease;
-            max-width: 800px;
-            color: var(--lighter);
-            font-weight: 300;
-        }
+.subtitle {
+font-size: 1.8rem;
+margin: 20px auto 40px;
+animation: fadeInUp 1.5s ease;
+max-width: 800px;
+color: var(--lighter);
+font-weight: 300;
+}
 
-        .cta-button {
-            display: inline-block;
-            padding: 18px 50px;
-            background: transparent;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            margin-top: 30px;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
-            position: relative;
-            overflow: hidden;
-            font-weight: 600;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+.cta-button {
+display: inline-block;
+padding: 18px 50px;
+background: transparent;
+color: #fff;
+text-decoration: none;
+border-radius: 50px;
+font-size: 1.3rem;
+margin-top: 30px;
+transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+border: 2px solid rgba(255, 255, 255, 0.3);
+backdrop-filter: blur(5px);
+position: relative;
+overflow: hidden;
+font-weight: 600;
+box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
 
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.6s;
-        }
+.cta-button::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+transition: 0.6s;
+}
 
-        .cta-button:hover::before {
-            left: 100%;
-        }
+.cta-button:hover::before {
+left: 100%;
+}
 
-        .cta-button:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(26, 115, 232, 0.4);
-            border-color: var(--primary);
-        }
+.cta-button:hover {
+background: rgba(255,255,255,0.1);
+transform: translateY(-5px) scale(1.05);
+box-shadow: 0 15px 40px rgba(26, 115, 232, 0.4);
+border-color: var(--primary);
+}
 
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
+.particles {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 1;
+}
 
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(2px);
-            animation: float linear infinite;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
-        }
+.particle {
+position: absolute;
+border-radius: 50%;
+filter: blur(2px);
+animation: float linear infinite;
+background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+}
 
-        .about-content {
-            position: relative;
-            padding: 150px 20px;
-            text-align: center;
-            overflow: hidden;
-            background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80') no-repeat center center/cover;
-        }
+.about-content {
+position: relative;
+padding: 150px 20px;
+text-align: center;
+overflow: hidden;
+background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80') no-repeat center center/cover;
+}
 
-        .about-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5,5,8,0.9);
-            z-index: 1;
-        }
+.about-overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(5,5,8,0.9);
+z-index: 1;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
+.container {
+max-width: 1200px;
+margin: 0 auto;
+position: relative;
+z-index: 2;
+}
 
-        h2 {
-            font-size: 3.5rem;
-            margin-bottom: 50px;
-            position: relative;
-            display: inline-block;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
+h2 {
+font-size: 3.5rem;
+margin-bottom: 50px;
+position: relative;
+display: inline-block;
+background: linear-gradient(90deg, var(--primary), var(--secondary));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+font-weight: 800;
+}
 
-        h2::after {
-            content: '';
-            width: 100px;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 5px;
-        }
+h2::after {
+content: '';
+width: 100px;
+height: 5px;
+background: linear-gradient(90deg, var(--primary), var(--secondary));
+position: absolute;
+bottom: -20px;
+left: 50%;
+transform: translateX(-50%);
+border-radius: 5px;
+}
 
-        .about-content p {
-            font-size: 1.3rem;
-            max-width: 900px;
-            margin: 0 auto 60px;
-            color: var(--lighter);
-            line-height: 1.8;
-            font-weight: 300;
-        }
+.about-content p {
+font-size: 1.3rem;
+max-width: 900px;
+margin: 0 auto 60px;
+color: var(--lighter);
+line-height: 1.8;
+font-weight: 300;
+}
 
-        .features {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 50px;
-            margin-top: 80px;
-        }
+.features {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+gap: 50px;
+margin-top: 80px;
+}
 
-        .feature-card {
-            width: 380px;
-            background: rgba(10, 10, 18, 0.7);
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
+.feature-card {
+width: 380px;
+background: rgba(10, 10, 18, 0.7);
+border-radius: 20px;
+box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+overflow: hidden;
 多名: transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0;
-            transform: translateY(50px) rotate(5deg);
-        }
+position: relative;
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+opacity: 0;
+transform: translateY(50px) rotate(5deg);
+}
 
-        .feature-card.visible {
-            opacity: 1;
-            transform: translateY(0) rotate(0);
-        }
+.feature-card.visible {
+opacity: 1;
+transform: translateY(0) rotate(0);
+}
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(26, 115, 232, 0.3) 0%, rgba(52, 168, 83, 0.3) 100%);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
+.feature-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(135deg, rgba(26, 115, 232, 0.3) 0%, rgba(52, 168, 83, 0.3) 100%);
+z-index: -1;
+opacity: 0;
+transition: opacity 0.6s ease;
+}
 
-        .feature-card:hover::before {
-            opacity: 1;
-        }
+.feature-card:hover::before {
+opacity: 1;
+}
 
-        .feature-card:hover {
-            transform: translateY(-20px) scale(1.05);
-            box-shadow: 0 25px 60px rgba(26, 115, 232, 0.5);
-            border-color: rgba(26, 115, 232, 0.3);
-        }
+.feature-card:hover {
+transform: translateY(-20px) scale(1.05);
+box-shadow: 0 25px 60px rgba(26, 115, 232, 0.5);
+border-color: rgba(26, 115, 232, 0.3);
+}
 
-        .feature-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 1s ease, filter 0.6s ease;
-            filter: grayscale(30%) brightness(0.8);
-        }
+.feature-card img {
+width: 100%;
+height: 250px;
+object-fit: cover;
+transition: transform 1s ease, filter 0.6s ease;
+filter: grayscale(30%) brightness(0.8);
+}
 
-        .feature-card:hover img {
-            transform: scale(1.1);
-            filter: grayscale(0%) brightness(1);
-        }
+.feature-card:hover img {
+transform: scale(1.1);
+filter: grayscale(0%) brightness(1);
+}
 
-        .feature-content {
-            padding: 30px;
-        }
+.feature-content {
+padding: 30px;
+}
 
-        .feature-card h3 {
-            font-size: 2rem;
-            margin: 20px 0;
-            color: #fff;
-            position: relative;
-            display: inline-block;
-            font-weight: 700;
-        }
+.feature-card h3 {
+font-size: 2rem;
+margin: 20px 0;
+color: #fff;
+position: relative;
+display: inline-block;
+font-weight: 700;
+}
 
-        .feature-card h3::after {
-            content: '';
-            width: 50px;
-            height: 4px;
-            background: var(--secondary);
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+.feature-card h3::after {
+content: '';
+width: 50px;
+height: 4px;
+background: var(--secondary);
+position: absolute;
+bottom: -12px;
+left: 50%;
+transform: translateX(-50%);
+}
 
-        .feature-card p {
-            font-size: 1.1rem;
-            color: var(--lighter);
-            margin-bottom: 25px;
-            padding: 0 15px;
-            font-weight: 300;
-        }
+.feature-card p {
+font-size: 1.1rem;
+color: var(--lighter);
+margin-bottom: 25px;
+padding: 0 15px;
+font-weight: 300;
+}
 
-        .floating-element {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            z-index: 1;
-            animation: float 20s ease-in-out infinite;
-        }
+.floating-element {
+position: absolute;
+border-radius: 50%;
+filter: blur(80px);
+opacity: 0.15;
+z-index: 1;
+animation: float 20s ease-in-out infinite;
+}
 
-        .float-1 {
-            width: 500px;
-            height: 500px;
-            background: var(--primary);
-            top: -100px;
-            left: -100px;
-        }
+.float-1 {
+width: 500px;
+height: 500px;
+background: var(--primary);
+top: -100px;
+left: -100px;
+}
 
-        .float-2 {
-            width: 700px;
-            height: 700px;
-            background: var(--secondary);
-            bottom: -200px;
-            right: -200px;
-            animation-delay: 5s;
-            animation-direction: reverse;
-        }
+.float-2 {
+width: 700px;
+height: 700px;
+background: var(--secondary);
+bottom: -200px;
+right: -200px;
+animation-delay: 5s;
+animation-direction: reverse;
+}
 
-        footer {
-            position: relative;
-            background: var(--dark);
-            color: #fff;
-            padding: 100px 20px 50px;
-            text-align: center;
-            overflow: hidden;
-        }
+footer {
+position: relative;
+background: var(--dark);
+color: #fff;
+padding: 100px 20px 50px;
+text-align: center;
+overflow: hidden;
+}
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
+.footer-content {
+max-width: 1200px;
+margin: 0 auto;
+position: relative;
+z-index: 2;
+}
 
-        .footer-logo {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 40px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
+.footer-logo {
+font-size: 2.5rem;
+font-weight: 800;
+margin-bottom: 40px;
+background: linear-gradient(90deg, var(--primary), var(--secondary));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+display: inline-block;
+}
 
-        .footer-slogan {
-            font-size: 1.3rem;
-            color: var(--lighter);
-            max-width: 700px;
-            margin: 0 auto 50px;
-            font-weight: 300;
-            line-height: 1.8;
-        }
+.footer-slogan {
+font-size: 1.3rem;
+color: var(--lighter);
+max-width: 700px;
+margin: 0 auto 50px;
+font-weight: 300;
+line-height: 1.8;
+}
 
-        .copyright {
-            margin-top: 80px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
+.copyright {
+margin-top: 80px;
+padding-top: 40px;
+border-top: 1px solid rgba(255, 255, 255, 0.1);
+font-size: 1rem;
+color: rgba(255, 255, 255, 0.5);
+}
 
-        .disclaimer {
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.4);
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-        }
+.disclaimer {
+margin-top: 30px;
+font-size: 0.9rem;
+color: rgba(255, 255, 255, 0.4);
+max-width: 800px;
+margin-left: auto;
+margin-right: auto;
+line-height: 1.6;
+}
 
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-80px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+@keyframes fadeInDown {
+from { opacity: 0; transform: translateY(-80px); }
+to { opacity: 1; transform: translateY(0); }
+}
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(80px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+@keyframes fadeInUp {
+from { opacity: 0; transform: translateY(80px); }
+to { opacity: 1; transform: translateY(0); }
+}
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(50px, 50px) rotate(5deg); }
-            50% { transform: translate(0, 100px) rotate(0deg); }
-            75% { transform: translate(-50px, 50px) rotate(-5deg); }
-        }
+@keyframes float {
+0%, 100% { transform: translate(0, 0) rotate(0deg); }
+25% { transform: translate(50px, 50px) rotate(5deg); }
+50% { transform: translate(0, 100px) rotate(0deg); }
+75% { transform: translate(-50px, 50px) rotate(-5deg); }
+}
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.1); opacity: 1; }
-        }
+@keyframes pulse {
+0%, 100% { transform: scale(1); opacity: 0.8; }
+50% { transform: scale(1.1); opacity: 1; }
+}
 
-        @media (max-width: 1200px) {
-            h1 { font-size: 4rem; }
-            h2 { font-size: 3rem; }
-        }
+@media (max-width: 1200px) {
+h1 { font-size: 4rem; }
+h2 { font-size: 3rem; }
+}
 
-        @media (max-width: 992px) {
-            h1 { font-size: 3.5rem; }
-            h2 { font-size: 2.5rem; }
-            .subtitle { font-size: 1.5rem; }
-            .feature-card { width: 320px; }
-        }
+@media (max-width: 992px) {
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; }
+.subtitle { font-size: 1.5rem; }
+.feature-card { width: 320px; }
+}
 
-        @media (max-width: 768px) {
-            h1 { font-size: 3rem; }
-            h2 { font-size: 2.2rem; }
-            .about-content p, .footer-slogan { font-size: 1.1rem; }
-            .feature-card { width: 100%; max-width: 400px; }
-            .back-button { width: 40px; height: 40px; font-size: 1.2rem; }
-        }
+@media (max-width: 768px) {
+h1 { font-size: 3rem; }
+h2 { font-size: 2.2rem; }
+.about-content p, .footer-slogan { font-size: 1.1rem; }
+.feature-card { width: 100%; max-width: 400px; }
+.back-button { width: 40px; height: 40px; font-size: 1.2rem; }
+}
 
-        @media (max-width: 576px) {
-            h1 { font-size: 2.5rem; line-height: 1.3; }
-            h2 { font-size: 2rem; }
-            .subtitle { font-size: 1.2rem; }
-            .cta-button { padding: 15px 30px; font-size: 1.1rem; }
-            .feature-card h3 { font-size: 1.8rem; }
-            .back-button { top: 15px; right: 15px; }
-        }
-    </style>
+@media (max-width: 576px) {
+h1 { font-size: 2.5rem; line-height: 1.3; }
+h2 { font-size: 2rem; }
+.subtitle { font-size: 1.2rem; }
+.cta-button { padding: 15px 30px; font-size: 1.1rem; }
+.feature-card h3 { font-size: 1.8rem; }
+.back-button { top: 15px; right: 15px; }
+}
+</style>
 </head>
 <body>
-    <a href="javascript:history.back()" class="back-button" aria-label="Go back to previous page">
-        <i class="fas fa-arrow-left"></i>
-        <!-- Fallback SVG if Font Awesome fails -->
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-    </a>
-    <div class="hero-section">
-        <video autoplay muted loop class="hero-video">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-audience-cheering-at-a-concert-46large.mp4" type="video/mp4">
-        </video>
-        <div class="particles" id="particles"></div>
-        <div class="overlay"></div>
-        <div class="content">
-            <h1>Experience Live Events Like Never Before</h1>
-            <p class="subtitle">TicketMaster revolutionizes event booking with seamless technology, exclusive access, and unforgettable experiences across movies, concerts, and sports worldwide.</p>
-            <a href="#about" class="cta-button">Discover Our Story</a>
-        </div>
-    </div>
-    <section class="about-content" id="about">
-        <div class="about-overlay"></div>
-        <div class="floating-element float-1"></div>
-        <div class="floating-element float-2"></div>
-        <div class="container">
-            <h2>Our Vision</h2>
-            <p>Founded in 2015, TicketMaster emerged from a simple idea: to transform how people discover and experience live entertainment. Today, we're the leading global platform connecting millions of fans with their favorite events through innovative technology and unparalleled service.</p>
-            <p>We believe every event should be accessible, every experience memorable, and every booking effortless. Our team of passionate entertainment experts works tirelessly to bring you closer to the moments that matter most.</p>
-            <div class="features">
-                <div class="feature-card">
-                    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Movies">
-                    <div class="feature-content">
-                        <h3>Cinematic Excellence</h3>
-                        <p>From blockbuster premieres to indie gems, we offer premium access to theaters worldwide. Enjoy reserved seating, VIP packages, and exclusive early bookings for the ultimate movie experience.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Events">
-                    <div class="feature-content">
-                        <h3>Unforgettable Events</h3>
-                        <p>Secure your spot at the world's most sought-after concerts, festivals, and performances. Our partnerships with top venues ensure you get the best seats with just a few clicks.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Sports">
-                    <div class="feature-content">
-                        <h3>Thrilling Sports</h3>
-                        <p>Feel the adrenaline of live sports with tickets to major leagues and championships worldwide. From courtside seats to VIP boxes, we bring you closer to the action.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">TicketMaster</div>
-            <p class="footer-slogan">Connecting you to the world's best entertainment experiences through innovative technology and exceptional service.</p>
-            <div class="copyright">
-                <p>© 2025 TicketMaster International. All rights reserved.</p>
-                <div class="disclaimer">
-                    <p>TicketMaster operates as an independent ticketing platform. Event dates, times, and availability are subject to change. All tickets are sold in accordance with our terms of service and the policies of our venue partners.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <script>
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = window.innerWidth < 768 ? 30 : 80;
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                const size = Math.random() * 8 + 3;
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                const delay = Math.random() * 15;
-                const duration = Math.random() * 25 + 15;
-                const opacity = Math.random() * 0.6 + 0.1;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
-                particle.style.opacity = opacity;
-                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
-                particlesContainer.appendChild(particle);
-            }
-        }
+<a href="javascript:history.back()" class="back-button" aria-label="Go back to previous page">
+<i class="fas fa-arrow-left"></i>
+<!-- Fallback SVG if Font Awesome fails -->
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+<path d="M19 12H5M12 19l-7-7 7-7"/>
+</svg>
+</a>
+<div class="hero-section">
+<video autoplay muted loop class="hero-video">
+<source src="https://assets.mixkit.co/videos/preview/mixkit-audience-cheering-at-a-concert-46large.mp4" type="video/mp4">
+</video>
+<div class="particles" id="particles"></div>
+<div class="overlay"></div>
+<div class="content">
+<h1>Experience Live Events Like Never Before</h1>
+<p class="subtitle">TicketMaster revolutionizes event booking with seamless technology, exclusive access, and unforgettable experiences across movies, concerts, and sports worldwide.</p>
+<a href="#about" class="cta-button">Discover Our Story</a>
+</div>
+</div>
+<section class="about-content" id="about">
+<div class="about-overlay"></div>
+<div class="floating-element float-1"></div>
+<div class="floating-element float-2"></div>
+<div class="container">
+<h2>Our Vision</h2>
+<p>Founded in 2015, TicketMaster emerged from a simple idea: to transform how people discover and experience live entertainment. Today, we're the leading global platform connecting millions of fans with their favorite events through innovative technology and unparalleled service.</p>
+<p>We believe every event should be accessible, every experience memorable, and every booking effortless. Our team of passionate entertainment experts works tirelessly to bring you closer to the moments that matter most.</p>
+<div class="features">
+<div class="feature-card">
+<img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Movies">
+<div class="feature-content">
+<h3>Cinematic Excellence</h3>
+<p>From blockbuster premieres to indie gems, we offer premium access to theaters worldwide. Enjoy reserved seating, VIP packages, and exclusive early bookings for the ultimate movie experience.</p>
+</div>
+</div>
+<div class="feature-card">
+<img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Events">
+<div class="feature-content">
+<h3>Unforgettable Events</h3>
+<p>Secure your spot at the world's most sought-after concerts, festivals, and performances. Our partnerships with top venues ensure you get the best seats with just a few clicks.</p>
+</div>
+</div>
+<div class="feature-card">
+<img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Sports">
+<div class="feature-content">
+<h3>Thrilling Sports</h3>
+<p>Feel the adrenaline of live sports with tickets to major leagues and championships worldwide. From courtside seats to VIP boxes, we bring you closer to the action.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<div class="footer-content">
+<div class="footer-logo">TicketMaster</div>
+<p class="footer-slogan">Connecting you to the world's best entertainment experiences through innovative technology and exceptional service.</p>
+<div class="copyright">
+<p>© 2025 TicketMaster International. All rights reserved.</p>
+<div class="disclaimer">
+<p>TicketMaster operates as an independent ticketing platform. Event dates, times, and availability are subject to change. All tickets are sold in accordance with our terms of service and the policies of our venue partners.</p>
+</div>
+</div>
+</div>
+</footer>
+<script>
+function createParticles() {
+const particlesContainer = document.getElementById('particles');
+const particleCount = window.innerWidth < 768 ? 30 : 80;
+for (let i = 0; i < particleCount; i++) {
+const particle = document.createElement('div');
+particle.classList.add('particle');
+const size = Math.random() * 8 + 3;
+const posX = Math.random() * 100;
+const posY = Math.random() * 100;
+const delay = Math.random() * 15;
+const duration = Math.random() * 25 + 15;
+const opacity = Math.random() * 0.6 + 0.1;
+particle.style.width = `${size}px`;
+particle.style.height = `${size}px`;
+particle.style.left = `${posX}%`;
+particle.style.top = `${posY}%`;
+particle.style.opacity = opacity;
+particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+particlesContainer.appendChild(particle);
+}
+}
 
-        function animateOnScroll() {
-            const elements = document.querySelectorAll('.feature-card');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
-            elements.forEach(el => { observer.observe(el); });
-        }
+function animateOnScroll() {
+const elements = document.querySelectorAll('.feature-card');
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.classList.add('visible');
+}
+});
+}, { threshold: 0.1 });
+elements.forEach(el => { observer.observe(el); });
+}
 
-        function setupParallax() {
-            window.addEventListener('scroll', () => {
-                const scrollPosition = window.scrollY;
-                const hero = document.querySelector('.hero-section');
-                hero.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
-                const about = document.querySelector('.about-content');
-                about.style.backgroundPositionY = `${scrollPosition * 0.3}px`;
-            });
-        }
+function setupParallax() {
+window.addEventListener('scroll', () => {
+const scrollPosition = window.scrollY;
+const hero = document.querySelector('.hero-section');
+hero.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+const about = document.querySelector('.about-content');
+about.style.backgroundPositionY = `${scrollPosition * 0.3}px`;
+});
+}
 
-        window.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            animateOnScroll();
-            setupParallax();
-        });
-    </script>
+window.addEventListener('DOMContentLoaded', () => {
+createParticles();
+animateOnScroll();
+setupParallax();
+});
+</script>
 </body>
+
 </html>
